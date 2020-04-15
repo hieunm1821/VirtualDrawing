@@ -22,9 +22,9 @@ def findColor(img,colors,colorValues):
 	for color in colors:
 		lower = np.array(color[:3])
 		upper = np.array(color[3:])
-		mask = cv2.inRange(imgHSV,lower,upper)
-		x,y = getContours(mask)
-		cv2.circle(imgResult, (x,y),15,colorValues[count],cv2.FILLED)
+		mask = cv2.inRange(imgHSV,lower,upper) 
+		x,y = getContours(mask) #use HSV mask to get location of specific color.
+		#cv2.circle(imgResult, (x,y),15,colorValues[count],cv2.FILLED)
 		if x != 0 and y != 0:
 			newPoints.append([x,y,count])
 		count += 1
@@ -45,8 +45,7 @@ def getContours(img):
 def drawOnCanvas(points,colorValues):
 	for point in points:
 		x,y,count = point
-		cv2.circle(imgResult,(x,y),15,colorValues[count],cv2.FILLED)
-
+		cv2.circle(imgResult,(x,y),10,colorValues[count],cv2.FILLED)
 
 while True:
     success, img = cap.read()
@@ -57,7 +56,6 @@ while True:
     		points.append(newPoint)
     if len(points) != 0:
     	drawOnCanvas(points,colorValues)
-
 
 
     cv2.imshow("Result", imgResult)
